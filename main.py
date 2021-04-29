@@ -1,4 +1,4 @@
-import pyautogui, time
+import pyautogui, time, keyboard
 
 
 def catchImageClick(img):
@@ -19,9 +19,22 @@ def drag(x, y):
     pyautogui.drag(x, y, 0.5, button='left')
 
 
+def lockToCloseButtom():
+    tmp = pyautogui.locateOnScreen('./image/dojo.png', confidence=0.9)
+    return tmp.left - 50, tmp.left + tmp.width
+
+
+def pressTostart():
+    while True:
+        if keyboard.read_key() == "s":
+            print("Start...")
+            break
+
 if __name__ == '__main__':
+    pressTostart()
     while True:
         x_org, y_org = getPosition('./image/poke.png')
+        l_pad, r_pad = lockToCloseButtom()
         print(time.time())
 
         catchImageClick('./image/battle.png')
@@ -32,7 +45,10 @@ if __name__ == '__main__':
 
         if pyautogui.locateOnScreen('./image/ad.png'):
             catchImageClick('./image/ad.png')
-            time.sleep(90)
+            while not pyautogui.locateOnScreen('./image/closeAd.png')\
+                    or pyautogui.locateOnScreen('./image/closeAd.png').left < l_pad\
+                    or pyautogui.locateOnScreen('./image/closeAd.png').left > r_pad:
+                time.sleep(1)
             catchImageClick('./image/closeAd.png')
 
         else:
