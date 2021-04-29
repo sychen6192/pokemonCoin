@@ -45,11 +45,15 @@ if __name__ == '__main__':
 
         if pyautogui.locateOnScreen('./image/ad.png'):
             catchImageClick('./image/ad.png')
-            while not pyautogui.locateOnScreen('./image/closeAd.png')\
-                    or pyautogui.locateOnScreen('./image/closeAd.png').left < l_pad\
-                    or pyautogui.locateOnScreen('./image/closeAd.png').left > r_pad:
-                time.sleep(1)
-            catchImageClick('./image/closeAd.png')
+            time.sleep(10)
+            if pyautogui.locateOnScreen('./image/pokeAd.png'):
+                catchImageClick('./image/pokeAd.png')
+            else:
+                while not pyautogui.locateOnScreen('./image/closeAd.png')\
+                        or pyautogui.locateOnScreen('./image/closeAd.png').left < l_pad\
+                        or pyautogui.locateOnScreen('./image/closeAd.png').left > r_pad:
+                    time.sleep(1)
+                catchImageClick('./image/closeAd.png')
 
         else:
             catchImageClick('./image/ok.png')
