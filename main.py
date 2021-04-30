@@ -1,4 +1,5 @@
-import pyautogui, time, keyboard
+import pyautogui, time, keyboard, datetime
+from multiprocessing import Process, Value
 
 
 def catchImageClick(img):
@@ -30,30 +31,37 @@ def pressTostart():
             print("Start...")
             break
 
+
 if __name__ == '__main__':
     pressTostart()
     while True:
         x_org, y_org = getPosition('./image/poke.png')
         l_pad, r_pad = lockToCloseButtom()
-        print(time.time())
 
         catchImageClick('./image/battle.png')
 
-        while not (pyautogui.locateOnScreen('./image/ad.png') or pyautogui.locateOnScreen('./image/ok.png')):
+        while not (pyautogui.locateOnScreen('./image/ad.png')\
+                   or pyautogui.locateOnScreen('./image/ok.png')
+                   or pyautogui.locateOnScreen('./image/bigOK.png')):
             moveTo(x_org + 20, y_org)
             drag(0, -100)
 
         if pyautogui.locateOnScreen('./image/ad.png'):
             catchImageClick('./image/ad.png')
-            time.sleep(8)
+            time.sleep(7)
             if pyautogui.locateOnScreen('./image/pokeAd.png'):
                 catchImageClick('./image/pokeAd.png')
+            elif pyautogui.locateOnScreen('./image/yes.png'):
+                catchImageClick('./image/yes.png')
             else:
                 while not pyautogui.locateOnScreen('./image/closeAd.png')\
                         or pyautogui.locateOnScreen('./image/closeAd.png').left < l_pad\
                         or pyautogui.locateOnScreen('./image/closeAd.png').left > r_pad:
                     time.sleep(1)
                 catchImageClick('./image/closeAd.png')
+
+        elif pyautogui.locateOnScreen('./image/bigOK.png'):
+            catchImageClick('./image/bigOK.png')
 
         else:
             catchImageClick('./image/ok.png')
