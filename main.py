@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
         if pyautogui.locateOnScreen('./image/ad.png'):
             catchImageClick('./image/ad.png')
-            time.sleep(10)
+            time.sleep(8)
             if pyautogui.locateOnScreen('./image/pokeAd.png'):
                 catchImageClick('./image/pokeAd.png')
             else:
